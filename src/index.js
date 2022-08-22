@@ -3,7 +3,7 @@ import countriesListTmpl from './templates/countries-list.hbs';
 import './css/styles.css';
 import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
-// import countriesMarkup from './fetchCountries.js'
+import {fetchCountryByName} from './fetchCountries.js'
 
 const DEBOUNCE_DELAY = 300;
 
@@ -12,13 +12,6 @@ const refs = {
     filterInput: document.querySelector('input'),
     countryList: document.querySelector('.country-list')
 };
-
-function fetchCountryByName(name) {
-    return fetch(`https://restcountries.com/v3.1/name/${name}?fields=name,capital,population,languages,flags`)
-    .then(response => {
-    return response.json();
-    })
-}
 
 function renderCountryCard(country) {
     country = country[0];
@@ -47,14 +40,14 @@ function onInputAction(evt) {
 
             if (resolve.length > 10) {
                 Notiflix.Notify.warning(`Too many matches found. Please enter a more specific name`)
-                console.log('Too many matches found. Please enter a more specific name');
+                // console.log('Too many matches found. Please enter a more specific name');
                 refs.countryCardContainer.innerHTML = '';
                 refs.countryList.innerHTML = '';
             };
 
             if (resolve.status === 404) {
                 Notiflix.Notify.failure(`Oops, there is no country with that name`)
-                console.log('Oops, there is no country with that name');
+                // console.log('Oops, there is no country with that name');
                 refs.countryCardContainer.innerHTML = '';
                 refs.countryList.innerHTML = '';
             }
